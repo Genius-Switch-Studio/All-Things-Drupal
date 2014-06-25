@@ -11,7 +11,7 @@ api = 2
 
 ;; Drupal
 
-projects[drupal][version] = 7.26
+projects[drupal][version] = 7.28
 
 ;; Modules
 
@@ -61,5 +61,5 @@ projects[] = wysiwyg_codemagic
 projects[] = ckeditor
 
 ;; Themes
-projects[] = omega
+projects[] = bootstrap
 

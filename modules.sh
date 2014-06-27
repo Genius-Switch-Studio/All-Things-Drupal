@@ -8,7 +8,6 @@ drush dl colorbox -y
 drush dl date -y
 drush dl date_ical -y
 drush dl ctools -y
-drush dl cd_co_pages -y
 drush dl ckeditor -y
 drush dl devel -y
 drush dl ds -y
@@ -24,7 +23,7 @@ drush dl google_analytics -y
 drush dl imagecache_actions -y
 drush dl imce -y
 drush dl imce_mkdir -y
-drush dl imce_wysiwig -y
+drush dl imce_wysiwyg -y
 drush dl job_scheduler -y
 drush dl jquery_update -y
 drush dl libraries -y
@@ -39,7 +38,7 @@ drush dl panels -y
 drush dl panels_everywhere -y
 drush dl panelizer -y
 drush dl pathauto -y
-drush dl pathlogic -y
+drush dl pathologic -y
 drush dl quicktabs -y
 drush dl redirect -y
 drush dl references -y

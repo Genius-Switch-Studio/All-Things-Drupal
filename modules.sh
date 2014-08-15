@@ -30,6 +30,8 @@ drush dl libraries -y
 drush dl link -y
 drush dl linkit -y
 drush dl login_destination -y
+drush dl menu_attributes -y
+drush dl menu_html -y
 drush dl metatag -y
 drush dl module_filter -y
 drush dl mollom -y
@@ -44,6 +46,7 @@ drush dl redirect -y
 drush dl references -y
 drush dl search_config -y
 drush dl securepages -y
+drush dl special_menu_items -y
 drush dl superfish -y
 drush dl stringoverrides -y
 drush dl token -y

@@ -1,0 +1,78 @@
+Drupal Preflight Checklist
+Security and Spam Possibilities
+File Permissions
+	1.	Make sure file permissions for file directories and code directory are set correctly: http://drupal.org/node/244924
+	2.	Run the 'Security Review' module on the production environment: http://drupal.org/project/security_review
+	3.	On /admin/modules? The 'PHP Filter' module must be disabled.
+	4.	On /admin/config/content/formats Filtered HTML or plain text MUST be set as the default to prevent cross-site scripting attacks. You must also check the configuration of the Filtered HTML format to ensure that the HTML filter is enabled for it and that no tags are allowed such as img, embed or object.? If the 'Better Formats' module is enabled, check the default formats assigned to the roles.
+	5.	On /admin/config/people/accounts ?Check the registration settings are appropriate for the site.
+Security Updates
+On /admin/reports/updates/list
+	1.	?
+	2.	Check for any security releases and run updates (testing locally first) if required.
+	3.	Drupal 7 will automatically alert you about security updates for enabled modules. If the client receives ongoing support, set the email to the proper notifications address.
+Modules
+On /admin/modules/list
+	1.	Make sure that only the modules that are being used are enabled. The more modules that are enabled, the slower the site will run and may be confusing to the administrators.
+	2.	Uninstall, then git remove any modules that are not being used and are not part of core.
+	3.	'Devel' module and other similar tools should be disabled at launch, but not removed.
+Email
+	1.	On /admin/config/system/site-information Make sure the email address and name are correct.
+	2.	On /admin/structure/contact and /admin/config/content/webform Make sure email addresses are set correctly for contact forms and webforms.
+	3.	Disable reroute_email module (if used) after informing all developers and QA users that email is going live.
+Permissions
+On /admin/people/permissions/list
+	1.	?
+	2.	Ensure permissions are set appropriately and minimally.?
+	3.	Any permission granted to anonymous users should generally also be given to authenticated users.?
+	4.	Be careful with granting the administer users permission.?
+	5.	The 'View Media' permission from the 'Media' module actually bypasses other file control and should only be for administrators.?
+	6.	Be sure that if one or more node access modules is in use (workflow access, og access, content access etc) that node permissions are not given which would prevent access from being determined by these modules.
+	7.	Once permissions are set, create a test user for each role, log in as them and try using the site the way they would to see if all goes well. (Hopefully this and some of the other items in this list were done during QA rather than now, but this is your last reminder!)
+Status Report
+On /admin/reports/status
+	1.	Ensure that 'Cron' has been running.
+	2.	Make sure database updates are up to date.
+	3.	Take care of any other concerns listed on this page.
+Pathauto Settings
+	1.	On /admin/config/search/path/patterns Make sure all paths are set properly, especially node path settings.
+	2.	On /admin/config/search/path/settings Change general settings for 'Update actions' to something other than 'Create a new alias.' and 'Delete the old alias.', which are only appropriate during development. 
+	3.	 In most cases 'Create a new alias but leave existing alias functioning' is appropriate for production. Alternatively or in combination, you can set redirects to be made when aliases are changed with the 'Redirect' module at /admin/config/search/redirect/settings.
+Content types & Nodes
+On /admin/structure/types
+	1.	Check to see if there are any content types not being used. If there are, confirm the type can be removed, and if so delete that content type.?
+	2.	Delete any dummy nodes that were created during development for testing. Track these down by searching for 'test', 'dummy', and for content created by the super user.
+Views
+On /admin/structure/views
+	1.	Delete any views no longer in use.
+	2.	Ensure all views have been exported to Features and are not in an overridden state.
+	3.	Public facing views, especially on the home page and on sites with a lot of authenticated traffic, should be configured within each view for caching.
+Error Reporting
+On /admin/config/development/logging
+Set the 'Error messages' display to 'None'.
+Performance Settings
+On /admin/config/development/performance
+	1.	Set 'Caching Mode' to normal.
+	2.	Enable? 'Page compression'.
+	3.	Enable? 'Optimize CSS' and 'Optimize JavaScript'.
+	4.	?'Block caching' should be enabled, unless there is help text on the form warning otherwise.? Minimum cache lifetime and expiration of cached pages should both be an hour, or as appropriate for the site.
+	5.	Alter the following lines in settings.php: ?ini_set('session.cache_expire', 200000);?ini_set('session.cache_limiter', 'none');?ini_set('session.cookie_lifetime', 2000000);?ini_set('session.gc_maxlifetime', 200000); ?The default values result in the sessions table growing very quickly and unnecessarily. Changing the numbers to something reasonable will not hinder the user experience and will prevent database bloating.
+	6.	Check for full URLs in node bodies etc. The client may have put in full URLs that will not work when the site goes live. Search in PHPMyAdmin or by grepping a tab-separated database dump, and fix or flag to the client anything you find.
+General Housekeeping
+Remove .txt files from Core
+	1.	Get rid of CHANGELOG.txt etc (from git etc). Do NOT remove robots.txt!
+	2.	Edit robots.txt to be standard (in case it has been edited during dev to restrict search crawlers).
+	1.	
+Update external services
+	1.	If using Google Analytics or Facebook integration, update settings for the live domain. 
+	2.	If using Commerce, ensure that the payment provider is set to live and has been tested.
+Check SSL
+If using SSL (you should be), change your local /etc/hosts to point the site to its live domain and ensure SSL redirection is working correctly.
+Update features
+Make sure all features are up to date so that the launch configuration is saved and can be reverted to.
+
+Google Webmaster Tools
+	1.	Use it!
+	2. 	At very least force indexing and upload sitemap.
+
+
